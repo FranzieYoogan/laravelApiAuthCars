@@ -50,6 +50,20 @@ class CarController extends Controller
 
     }
 
+    public function filterByModel(Request $request) {
+
+        $request->validate([
+
+            'model' => 'required|string|max:255',
+
+        ]);
+
+        $model = $request->input('model');
+        $cars = Auth::user()->cars()->where('model', 'LIKE', "%{$model}%")->get();
+        return response()->json($cars,200);
+
+    }
+
     /**
      * Update the specified resource in storage.
      */
